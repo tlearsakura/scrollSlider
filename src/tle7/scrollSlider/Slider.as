@@ -141,8 +141,9 @@ package tle7.scrollSlider
 				list[typePos] = this[typeTouch]-lengthMouse;
 			}else{
 				list[typePos] += (targetP-list[typePos])/10;
-				//trace(Math.floor(main.x),Math.floor(targetPx));
-				if(Math.floor(list[typePos])==Math.floor(targetP)){
+				if(Math.floor(list[typePos])==Math.floor(targetP) ||
+					Math.floor(list[typePos])-1==Math.floor(targetP) ||
+					Math.floor(list[typePos])+1==Math.floor(targetP)){
 					list[typePos] = targetP;
 					this.removeEventListener(Event.ENTER_FRAME,dragLoop);
 				}
