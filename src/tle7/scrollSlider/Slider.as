@@ -125,7 +125,7 @@ package tle7.scrollSlider
 				pressTag();
 			}else if(e.type == MouseEvent.MOUSE_UP){
 				stage.removeEventListener(MouseEvent.MOUSE_UP, touchScreen);
-				dropThis();
+				dropThis(e.target);
 			}
 		}
 		
@@ -158,7 +158,7 @@ package tle7.scrollSlider
 			draging = true;
 			this.addEventListener(Event.ENTER_FRAME,dragLoop);
 		}
-		protected function dropThis():void {
+		protected function dropThis(target:Object):void {
 			if(draging){
 				targetP = (list[typePos] + (this[typeTouch] - startP)) + ((this[typeTouch] - startP)*power);
 				draging = false;
@@ -167,7 +167,7 @@ package tle7.scrollSlider
 				if(diffTime > 250){
 					targetP = list[typePos];
 				}else if(diffTime < 90){
-					//touched.dispatch(touch.target,this);
+					touched.dispatch(target,this);
 				}
 			}
 		}

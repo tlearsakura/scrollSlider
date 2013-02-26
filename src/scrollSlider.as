@@ -15,6 +15,7 @@ package
 		public function scrollSlider()
 		{
 			slider1 = new Slider(700,100,SliderType.HORIZONTAL,10,1.1);
+			slider1.touched.add(onTouched);
 			slider1.x = 50;
 			slider1.y = 20;
 			slider1.changedPosition.add(onChangePosition1);
@@ -26,6 +27,7 @@ package
 			this.addChild(slider1);
 			
 			slider2 = new Slider(100,500,SliderType.VERTICAL,10,1.1);
+			slider2.touched.add(onTouched);
 			slider2.x = 50;
 			slider2.y = 100;
 			slider2.changedPosition.add(onChangePosition2);
@@ -36,6 +38,11 @@ package
 			this.addChild(slider2);
 			
 			slider1.position = .5;
+		}
+		
+		private function onTouched(target:Object,slider:Slider):void
+		{
+			trace(target,slider);
 		}
 		
 		private function onChangePosition1(val:Number):void
