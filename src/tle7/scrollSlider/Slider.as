@@ -1,4 +1,4 @@
-package tle7.scrollSliderStarling
+package tle7.scrollSlider
 {
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
@@ -10,7 +10,7 @@ package tle7.scrollSliderStarling
 	
 	import org.osflash.signals.Signal;
 	
-	public class SliderStarling extends Sprite
+	public class Slider extends Sprite
 	{
 		private var mClip:Shape;
 		private var plane:Shape;
@@ -37,9 +37,9 @@ package tle7.scrollSliderStarling
 		public var touched:Signal;
 		public var changedPosition:Signal;
 		
-		public function SliderStarling(width:Number,height:Number,type:String,gap:Number=0,power:Number=0)
+		public function Slider(width:Number,height:Number,type:String,gap:Number=0,power:Number=0)
 		{
-			touched = new Signal(Object,SliderStarling);
+			touched = new Signal(Object,Slider);
 			changedPosition = new Signal(Number);
 			
 			rect = new Rectangle(0,0,width,height);

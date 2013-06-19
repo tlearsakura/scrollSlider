@@ -1,4 +1,4 @@
-package tle7.scrollSliderStarling
+package tle7.scrollSlider
 {
 	public final class SliderType
 	{
