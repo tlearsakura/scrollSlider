@@ -22,7 +22,7 @@ package tle7.scrollSlider
 		
 		private var startP:Number;
 		private var targetP:Number;
-		private var lengthMouse:Number;
+		private var lengthMouse:Number, half:Number;
 		private var power:Number;
 		private var _percent:Number = 0;
 		private var _pHeight:Number;
@@ -70,10 +70,12 @@ package tle7.scrollSlider
 				typePos = 'x';
 				typeSize = 'width';
 				typeTouch = 'mouseX';
+				half = width * .5;
 			}else if(type=='vertical'){
 				typePos = 'y';
 				typeSize = 'height';
 				typeTouch = 'mouseY';
+				half = height * .5;
 			}
 			
 			setSlide();
@@ -116,7 +118,7 @@ package tle7.scrollSlider
 			list[typePos] += e.delta*(rect[typeSize]/50);
 			if(list[typePos] > 0) list[typePos] = 0;
 			else if(list[typePos] < -(list[typeSize])+rect[typeSize]) list[typePos] = -(list[typeSize]) + rect[typeSize];
-			_percent = Math.abs(list[typePos])/_pHeight*100/100;
+			_percent = Math.abs(list[typePos])/_pHeight;
 			changedPosition.dispatch(_percent);
 		}
 		private function touchScreen(e:MouseEvent):void {
@@ -130,20 +132,23 @@ package tle7.scrollSlider
 		}
 		
 		protected function dragLoop(e:Event):void {
-			if((draging && list[typePos] > rect[typeSize]*.5) || (!draging && list[typePos] > 0)){
-				targetP = 0;
-				draging = false;
-			}else if((draging && list[typePos]+list[typeSize] < rect[typeSize]*.5) || (!draging && list[typePos]+list[typeSize] < rect[typeSize])){
-				targetP = -(list[typeSize]) + rect[typeSize];
-				draging = false;
-			}
 			if(draging){
-				list[typePos] = this[typeTouch]-lengthMouse;
-				lengthMouse = Math.abs(list[typePos]) + this[typeTouch];
+				if(list[typePos] > 0){
+					targetP = 0;
+					list[typePos] = this[typeTouch] - lengthMouse;
+					list[typePos] *= .5;
+				}else if(list[typePos]+list[typeSize] < rect[typeSize]){
+					targetP = -(list[typeSize]) + rect[typeSize];
+					list[typePos] = this[typeTouch] - lengthMouse;
+					list[typePos] -=((list[typePos]+list[typeSize]) - rect[typeSize]) * .5;
+				}else list[typePos] = this[typeTouch] - lengthMouse;
 				startPressTime = getTimer();
 				startP = this[typeTouch];
 			}else{
-				list[typePos] += (targetP-list[typePos])/10;
+				if(list[typePos] > 0) targetP = 0;
+				else if(list[typePos]+list[typeSize] < rect[typeSize]) targetP = -(list[typeSize]) + rect[typeSize];
+				
+				list[typePos] += (targetP-list[typePos])/5;
 				if(Math.floor(list[typePos])==Math.floor(targetP) ||
 					Math.floor(list[typePos])-1==Math.floor(targetP) ||
 					Math.floor(list[typePos])+1==Math.floor(targetP)){
@@ -151,11 +156,11 @@ package tle7.scrollSlider
 					this.removeEventListener(Event.ENTER_FRAME,dragLoop);
 				}
 			}
-			_percent = Math.abs(list[typePos])/_pHeight*100/100;
+			_percent = Math.abs(list[typePos])/_pHeight;
 			changedPosition.dispatch(_percent);
 		}
 		protected function pressTag():void {
-			lengthMouse = Math.abs(list[typePos]) + this[typeTouch];
+			lengthMouse = this[typeTouch] - list[typePos];
 			startPressTime = getTimer();
 			startP = this[typeTouch];
 			draging = true;
@@ -163,15 +168,16 @@ package tle7.scrollSlider
 		}
 		protected function dropThis():void {
 			if(draging){
-				targetP = (list[typePos] + (this[typeTouch] - startP)) + ((this[typeTouch] - startP)*power);
 				draging = false;
 				var diffTime:Number = getTimer()-startPressTime;
 				//trace(diffTime);
-				if(diffTime > 300){
+				if(diffTime > 250){
 					targetP = list[typePos];
 				}else if(diffTime < 80){
-					//touched.dispatch(touch.target,this);
+					targetP = (list[typePos] + (this[typeTouch] - startP)) + ((this[typeTouch] - startP)*power);
 				}
+				if(list[typePos] > 0) targetP = 0;
+				else if(list[typePos]+list[typeSize] < rect[typeSize]) targetP = -(list[typeSize]) + rect[typeSize];
 			}
 		}
 		

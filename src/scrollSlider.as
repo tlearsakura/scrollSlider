@@ -6,7 +6,7 @@ package
 	import tle7.scrollSlider.Slider;
 	import tle7.scrollSlider.SliderType;
 	
-	[SWF(width="800", height="600", frameRate="60", backgroundColor="#cccccc")]
+	[SWF(width="800", height="600", frameRate="30", backgroundColor="#cccccc")]
 	public class scrollSlider extends Sprite
 	{
 		private var slider1:Slider;
@@ -14,7 +14,7 @@ package
 		
 		public function scrollSlider()
 		{
-			slider1 = new Slider(700,100,SliderType.HORIZONTAL,10,10);
+			slider1 = new Slider(700,100,SliderType.HORIZONTAL,10,5);
 			slider1.touched.add(onTouched);
 			slider1.x = 50;
 			slider1.y = 20;
@@ -26,7 +26,7 @@ package
 			}
 			this.addChild(slider1);
 			
-			slider2 = new Slider(100,500,SliderType.VERTICAL,10,10);
+			slider2 = new Slider(100,500,SliderType.VERTICAL,10,5);
 			slider2.touched.add(onTouched);
 			slider2.x = 50;
 			slider2.y = 100;
@@ -40,18 +40,15 @@ package
 			slider1.position = .5;
 		}
 		
-		private function onTouched(target:Object,slider:Slider):void
-		{
+		private function onTouched(target:Object,slider:Slider):void {
 			trace(target,slider);
 		}
 		
-		private function onChangePosition1(val:Number):void
-		{
+		private function onChangePosition1(val:Number):void {
 			//trace('slider1',val);
 		}
 		
-		private function onChangePosition2(val:Number):void
-		{
+		private function onChangePosition2(val:Number):void {
 			//trace('slider2',val);
 		}
 	}
