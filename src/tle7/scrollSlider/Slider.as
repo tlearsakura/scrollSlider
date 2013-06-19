@@ -148,7 +148,7 @@ package tle7.scrollSlider
 				if(list[typePos] > 0) targetP = 0;
 				else if(list[typePos]+list[typeSize] < rect[typeSize]) targetP = -(list[typeSize]) + rect[typeSize];
 				
-				list[typePos] += (targetP-list[typePos])/5;
+				list[typePos] += (targetP-list[typePos])/10;
 				if(Math.floor(list[typePos])==Math.floor(targetP) ||
 					Math.floor(list[typePos])-1==Math.floor(targetP) ||
 					Math.floor(list[typePos])+1==Math.floor(targetP)){
