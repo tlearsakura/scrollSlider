@@ -5,6 +5,7 @@ package tle7.scrollSlider
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.getTimer;
 	
@@ -19,6 +20,7 @@ package tle7.scrollSlider
 		private var startPressTime:Number;
 		private var draging:Boolean = false;
 		private var dragItem:Boolean = false;
+		private var touchPoint:Point = new Point(), upPoint:Point = new Point();
 		
 		private var startP:Number;
 		private var targetP:Number;
@@ -162,6 +164,8 @@ package tle7.scrollSlider
 		protected function pressTag():void {
 			lengthMouse = this[typeTouch] - list[typePos];
 			startPressTime = getTimer();
+			touchPoint.x = this.mouseX;
+			touchPoint.y = this.mouseY;
 			startP = this[typeTouch];
 			draging = true;
 			this.addEventListener(Event.ENTER_FRAME,dragLoop);
@@ -174,7 +178,8 @@ package tle7.scrollSlider
 				if(diffTime > 250){
 					targetP = list[typePos];
 				}else if(diffTime < 80){
-					touched.dispatch(target,this);
+					upPoint.x = this.mouseX; upPoint.y = this.mouseY;
+					if(Point.distance(touchPoint,upPoint) < 10) touched.dispatch(target,this);
 					targetP = (list[typePos] + (this[typeTouch] - startP)) + ((this[typeTouch] - startP)*power);
 				}
 				if(list[typePos] > 0) targetP = 0;
