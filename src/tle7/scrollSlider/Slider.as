@@ -175,13 +175,13 @@ package tle7.scrollSlider
 				draging = false;
 				var diffTime:Number = getTimer()-startPressTime;
 				//trace(diffTime);
-				if(diffTime > 250){
+				/*if(diffTime > 250){
 					targetP = list[typePos];
-				}else if(diffTime < 80){
+				}else if(diffTime < 80){*/
 					upPoint.x = this.mouseX; upPoint.y = this.mouseY;
 					if(Point.distance(touchPoint,upPoint) < 10) touched.dispatch(target,this);
-					targetP = (list[typePos] + (this[typeTouch] - startP)) + ((this[typeTouch] - startP)*power);
-				}
+					targetP = (list[typePos] + (this[typeTouch] - startP)) + ((this[typeTouch] - startP)*(100/diffTime)*power);
+				//}
 				if(list[typePos] > 0) targetP = 0;
 				else if(list[typePos]+list[typeSize] < rect[typeSize]) targetP = -(list[typeSize]) + rect[typeSize];
 			}

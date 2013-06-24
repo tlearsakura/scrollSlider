@@ -14,7 +14,7 @@ package
 		
 		public function scrollSlider()
 		{
-			slider1 = new Slider(700,100,SliderType.HORIZONTAL,10,5);
+			slider1 = new Slider(700,100,SliderType.HORIZONTAL,10,3);
 			slider1.touched.add(onTouched);
 			slider1.x = 50;
 			slider1.y = 20;
@@ -26,7 +26,7 @@ package
 			}
 			this.addChild(slider1);
 			
-			slider2 = new Slider(100,500,SliderType.VERTICAL,10,5);
+			slider2 = new Slider(100,500,SliderType.VERTICAL,10,3);
 			slider2.touched.add(onTouched);
 			slider2.x = 50;
 			slider2.y = 100;
